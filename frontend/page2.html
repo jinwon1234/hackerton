@@ -74,7 +74,7 @@ first layer
         // 서버에서 업체 데이터를 받아오는 함수
         async function fetchStores() {
             // 선택된 업종 값 가져오기
-            let storeType = 7,8; //원하는 업종 골라서 페이지별 넣기
+            let storeType = 7,8; //원하는 업종 골라서 페이지별 넣기 (input에서 받은 value)
 
             // 서버에 업종별 데이터를 요청
             const response = await fetch(`/api/getStoresByType?type=${storeType}`); //DB에서 저장된 업체 데이터 끌어오기
