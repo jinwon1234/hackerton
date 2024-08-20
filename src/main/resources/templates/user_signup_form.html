@@ -4,65 +4,72 @@
 <head>
     <title>회원가입</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.14.0/dist/full.css" rel="stylesheet">
 </head>
 <body>
 <div layout:fragment="content" class="container my-3 mx-auto max-w-lg p-4">
     <div class="my-3 border-b pb-2 text-center">
         <h4 class="text-xl font-semibold">회원가입</h4>
     </div>
-    <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post" enctype="multipart/form-data" class="space-y-4">
+    <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post" enctype="multipart/form-data" class="space-y-6">
         <div th:replace="~{form_errors :: formErrorsFragment}"></div>
-        <div class="mb-3 flex justify-center">
-            <label for="username" id="username" class="form-control w-full max-w-xs">
-                <div class="label">
-                    <span class="label-text">사용자ID</span>
-                </div>
-                <input type="text" th:field="*{username}" placeholder="사용자ID" class="input input-bordered w-full max-w-xs">
+
+        <!-- 사용자ID -->
+        <div class="flex flex-col items-center">
+            <label for="username" id="username" class="w-full max-w-xs">
+                <span class="label-text text-base font-medium">사용자ID</span>
+                <input type="text" th:field="*{username}" placeholder="사용자ID" class="input input-bordered w-full mt-1">
             </label>
         </div>
-        <div class="mb-3 flex justify-center">
-            <label for="password1" id="password1" class="form-control w-full max-w-xs">
-                <div class="label">
-                    <span class="label-text">비밀번호</span>
-                </div>
-                <input type="password" th:field="*{password1}" placeholder="비밀번호" class="input input-bordered w-full max-w-xs">
+
+        <!-- 비밀번호 -->
+        <div class="flex flex-col items-center">
+            <label for="password1" id="password1" class="w-full max-w-xs">
+                <span class="label-text text-base font-medium">비밀번호</span>
+                <input type="password" th:field="*{password1}" placeholder="비밀번호" class="input input-bordered w-full mt-1">
             </label>
         </div>
-        <div class="mb-3 flex justify-center">
-            <label for="password2" id="password2" class="form-control w-full max-w-xs">
-                <div class="label">
-                    <span class="label-text">비밀번호 확인</span>
-                </div>
-                <input type="password" th:field="*{password2}" placeholder="비밀번호 확인" class="input input-bordered w-full max-w-xs">
+
+        <!-- 비밀번호 확인 -->
+        <div class="flex flex-col items-center">
+            <label for="password2" id="password2" class="w-full max-w-xs">
+                <span class="label-text text-base font-medium">비밀번호 확인</span>
+                <input type="password" th:field="*{password2}" placeholder="비밀번호 확인" class="input input-bordered w-full mt-1">
             </label>
         </div>
-        <div class="mb-3 flex justify-center">
-            <label for="email" id="email" class="form-control w-full max-w-xs">
-                <div class="label">
-                    <span class="label-text">이메일</span>
-                </div>
-                <input type="email" th:field="*{email}" placeholder="이메일" class="input input-bordered w-full max-w-xs">
+
+        <!-- 이메일 -->
+        <div class="flex flex-col items-center">
+            <label for="email" id="email" class="w-full max-w-xs">
+                <span class="label-text text-base font-medium">이메일</span>
+                <input type="email" th:field="*{email}" placeholder="이메일" class="input input-bordered w-full mt-1">
             </label>
         </div>
-        <div class="mb-3 flex justify-center">
-            <label for="contactNumber" id = "contactNumber" class="form-control w-full max-w-xs">
-                <div class="label">
-                    <span class="label-text">연락처</span>
-                </div>
-                <input type="text" th:field="*{contactNumber}" placeholder="'-'를 제외하고 입력해주세요" class="input input-bordered w-full max-w-xs">
+
+        <!-- 연락처 -->
+        <div class="flex flex-col items-center">
+            <label for="contactNumber" id="contactNumber" class="w-full max-w-xs">
+                <span class="label-text text-base font-medium">연락처</span>
+                <input type="text" th:field="*{contactNumber}" placeholder="'-'를 제외하고 입력해주세요" class="input input-bordered w-full mt-1">
             </label>
         </div>
-        <div class="mb-3 flex flex-col">
-            <span class="text-gray-700 mb-2">Role:</span>
-            <div class="flex items-center">
-                <input type="radio" id="roleUser" name="role" th:value="user" th:field="*{role}" class="mr-2">
-                <label for="roleUser" class="text-gray-700">User</label>
+
+        <!-- 구분 (라디오 버튼) -->
+        <div class="flex flex-col items-center">
+            <span class="label-text text-base font-medium mb-2">구분</span>
+            <div class="flex justify-around w-full max-w-xs">
+                <label class="flex items-center">
+                    <input type="radio" id="roleUser" name="role" th:value="user" th:field="*{role}" class="radio radio-primary mr-2">
+                    <span class="text-gray-700">사용자</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="radio" id="roleBusiness" name="role" th:value="business" th:field="*{role}" class="radio radio-primary mr-2">
+                    <span class="text-gray-700">사업자</span>
+                </label>
             </div>
-            <div class="flex items-center mt-2">
-                <input type="radio" id="roleBusiness" name="role" th:value="business" th:field="*{role}" class="mr-2">
-                <label for="roleBusiness" class="text-gray-700">Business</label>
-            </div>
         </div>
+
+        <!-- 회원가입 버튼 -->
         <button type="submit" class="btn btn-primary w-full">회원가입</button>
     </form>
 </div>
