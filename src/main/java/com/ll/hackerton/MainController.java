@@ -22,8 +22,7 @@ public class MainController {
     @GetMapping("/")
     public String main(Model model, Principal principal) {
         if (principal == null) {
-            // Handle the case when the user is not authenticated
-            return "redirect:/user/login";  // Or an appropriate error message
+            return "main_not_login";
         }
         String username = principal.getName();
 
