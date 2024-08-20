@@ -1,0 +1,156 @@
+<!-- 
+
+first layer
+1.nav
+2.main
+3.footer 
+
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description"
+        content="소상공인 홍보 사이트">
+        <meta name="author"
+        content="team04">
+        <title>소똑소똑 - 카페</title>
+        <link rel="stylesheet" href="style.css">
+        <style>
+          input, select {
+              margin: 5px 0;
+          }
+          #storeList {
+              margin-top: 20px;
+          }
+          #map {
+              width: 100%;
+              height: 400px;
+              margin-top: 20px;
+          }
+      </style>
+      <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=29f75760ed5caf05e0756b9ebb7847ad"></script> //키는 현재 제 것으로 들어가 있습니다(수현)
+    </head>
+    <body>
+        <nav id="contents">
+            <ul>
+                <li><a href="main.html">홈</a></li>
+                <li><a href="page1.html">식사</a></li>
+                <li><a href="page2.html">카페</a></li>
+                <li><a href="page3.html">축제</a></li>
+                <li><a href="page4.html">행사</a></li>
+                <li><a href="input.html" target="_blank">사장님 메뉴</a></li>
+            </ul>
+            <h2 id="nav_title"><a href="main.html">소똑소똑</a></h2>
+        </nav>
+        <section id="main">
+            <section class="white">
+                <h1 id="title">소소하지만 똑똑한<br>
+                    소상공인 홍보 사이트<br>
+                    </h1>
+                <h1 id="title_bigger">소똑소똑</h1>
+                <button id="fetchStores">조회</button>
+
+    <!-- 업체 리스트 표시 -->
+    <div id="storeList"></div>
+
+    <!-- 지도 영역 -->
+    <div id="map"></div>
+
+    <script>
+        let map;
+        let markers = [];
+
+        // 지도 초기화 함수
+        function initMap() {
+            const mapContainer = document.getElementById('map');
+            const mapOption = {
+                center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울 광화문 좌표
+                level: 5 // 확대 레벨
+            };
+            map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다.
+        }
+
+        // 서버에서 업체 데이터를 받아오는 함수
+        async function fetchStores() {
+            // 선택된 업종 값 가져오기
+            let storeType = 7,8; //원하는 업종 골라서 페이지별 넣기
+
+            // 서버에 업종별 데이터를 요청
+            const response = await fetch(`/api/getStoresByType?type=${storeType}`); //DB에서 저장된 업체 데이터 끌어오기
+            const stores = await response.json();
+
+            // 리스트에 데이터 표시
+            displayStoreList(stores);
+
+            // 지도에 마커 표시
+            displayMarkers(stores);
+        }
+
+        // 업체 리스트를 HTML에 표시하는 함수
+        function displayStoreList(stores) {
+            let storeListDiv = document.getElementById("storeList");
+            storeListDiv.innerHTML = ''; // 기존 리스트 초기화
+
+            stores.forEach(store => {
+                let storeDiv = document.createElement('div');
+                storeDiv.innerHTML = `<strong>${store.name}</strong> - ${store.address} - ${store.tel}`;
+                storeListDiv.appendChild(storeDiv);
+            });
+        }
+
+        // 지도에 마커를 표시하는 함수
+        function displayMarkers(stores) {
+            // 기존 마커 제거
+            markers.forEach(marker => marker.setMap(null));
+            markers = [];
+
+            let geocoder = new kakao.maps.services.Geocoder();
+
+            stores.forEach(store => {
+                geocoder.addressSearch(store.address, function(result, status) {
+                    if (status === kakao.maps.services.Status.OK) {
+                        let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                        // 마커 생성 및 지도에 표시
+                        let marker = new kakao.maps.Marker({
+                            map: map,
+                            position: coords
+                        });
+
+                        // 마커에 클릭 이벤트를 등록
+                        let infowindow = new kakao.maps.InfoWindow({
+                            content: `<div style="padding:10px;min-width:150px;">${store.name}<br>${store.address}<br>${store.tel}</div>`
+                        });
+
+                        kakao.maps.event.addListener(marker, 'click', function() {
+                            infowindow.open(map, marker);
+                        });
+
+                        // 마커 리스트에 추가
+                        markers.push(marker);
+
+                        // 지도 중심을 마커로 이동
+                        map.setCenter(coords);
+                    } else {
+                        console.error(`주소를 찾을 수 없습니다: ${store.address}`);
+                    }
+                });
+            });
+        }
+
+        // 지도 초기화
+        window.onload = initMap;
+
+        // 조회 버튼 클릭 시 데이터 가져오기
+        document.getElementById("fetchStores").addEventListener("click", fetchStores);
+    </script>
+            </section>
+        </section>
+        <footer>
+            <div>
+                <a href="input.html" target="_blank">점포등록</a>
+            </div>
+        </footer>
+    </body>
+</html>
