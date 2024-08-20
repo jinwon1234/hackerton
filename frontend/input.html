@@ -143,8 +143,9 @@
                     <input type="submit" id="submitBT" value="제출">
                     <script>
                         let submitBT = document.getElementById('submitBT')
-                        submitBT.addEventListener('click', alert('정상적으로 제출되었습니다.'))
-                    </script>
+                        submitBT.addEventListener("click", function(event) {
+                        event.preventDefault();
+                        alert('정상적으로 제출되었습니다.');});                    </script>
                     <input type="reset" id="resetBT" value="작성한 내용 초기화">
                 </fieldset>
             </p>
