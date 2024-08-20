@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소똑소똑 - 홈</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+        .box {
+            width: 200px;
+            height: 200px;
+            margin: 10px;
+            background: linear-gradient(to bottom, 
+                        rgb(129, 252, 136) 7%,
+                        white 7%,
+                        white 70%,  
+                        rgb(1, 62, 4) 70%, 
+                        rgb(1, 62, 4) 70.5%,
+                        white 70.5%
+                        );
+            border: 1px solid rgb(1, 62, 4);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .box:hover {
+            box-shadow: 0px 0px 7px 0px #ccc;
+            transition: box-shadow 0.2s ease;
+        }
+        .box a {
+            text-decoration: none;
+            color: black;
+            
+        }
+        .box a:hover {
+            text-decoration: underline;
+        }
+        .box h3 {
+            margin: -10px 0 20px 0;
+            font: black 10px;
+            font: 24px;
+            font-weight: bold;
+        }
+        .box p {
+            margin: 0;
+        }
+        p.des {
+            padding: 10px 10px;            
+            font-size: small;
+            color: #565656;
+            font-weight: bold;
+        }
+        img.main{
+            width: 100px;
+            margin: 30px;
+        }
+        /*모바일 화면에서 box를 클래스별로(line1,line2)나눠지게 가능할까요*/
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div>
+        <div class="box line1">
+        <a href="page1.html">
+        <img src="050-poke-bowl.png" alt="" class="main">
+        <h3>식사</h3>
+        </a></div>
+        <p class="des">가까운 밥집을 추천해 드립니다.</p>
+    </div>
+    <div>
+        <div class="box line1">
+        <a href="page2.html">
+        <img src="033-tea.png" alt="" class="main">
+        <h3>카페</h3>
+        </a></div>
+        <p class="des">가까운 카페, 디저트 가게를 추천해 드립니다.</p>
+    </div>
+    <div>
+        <div class="box line2">
+        <a href="page3.html">
+        <img src="042-decoration.png" alt="" class="main">
+        <h3>축제</h3>
+        </a></div>
+        <p class="des">부산 대표 축제에 방문했을 때 가기 좋은 맛집을 소개합니다.</p>
+    </div>
+    <div>
+        <div class="box line2">
+        <a href="page4.html">
+        <img src="046-voucher.png" alt="" class="main">
+        <h3>행사</h3>
+        </a></div>
+        <p class="des">현재 할인, 증정 등 행사를 진행하는 가게를 모아볼 수 있습니다.</p>
+    </div>
+</div>
+
+</body>
+</html>
